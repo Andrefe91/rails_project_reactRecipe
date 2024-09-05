@@ -21,7 +21,7 @@ class Api::V1::RecipesController < ApplicationController
 
   def destroy
     @recipe&.destroy
-    render json: { nessage: 'Recipe deleted!' }
+    render json: { message: 'Recipe deleted!' }
   end
 
   private

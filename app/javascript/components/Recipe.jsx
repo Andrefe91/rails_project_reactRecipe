@@ -43,6 +43,31 @@ export default function Recipe() {
 
 	const recipeInstruction = addHtmlEntities(recipe.instruction);
 
+	function deleteRecipe() {
+		const url = `/api/v1/destroy/${params.id}`;
+		const token = document.querySelector('meta[name = "csrf-token"]').content;
+
+		if (!confirm("Are you sure you want to delete this?")) {
+			return;
+		}
+
+		fetch(url, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+				"X-CSRF-Token": token,
+			},
+		})
+			.then((response) => {
+				if (response.ok) {
+					return response.json();
+				}
+				throw new Error("Error in connection to API endpoint");
+			})
+			.then(() => navigate("/recipes"))
+			.catch((error) => console.log(error.message));
+	}
+
 	return (
 		<div className="">
 			<div className="hero position-relative d-flex align-items-center justify-content-center">
@@ -73,7 +98,11 @@ export default function Recipe() {
 						/>
 					</div>
 					<div className="col-sm-12 col-lg-2">
-						<button type="button" className="btn btn-danger">
+						<button
+							type="button"
+							className="btn btn-danger"
+							onClick={deleteRecipe}
+						>
 							Delete Recipe
 						</button>
 					</div>
