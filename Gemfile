@@ -53,4 +53,4 @@ group :development do
 end
 
 
-gem "ostruct", "~> 0.6.0"
+gem "ostruct", "~> 0.6.1"
